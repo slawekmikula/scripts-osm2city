@@ -112,9 +112,12 @@ function exe_batch {
 function exe_zip_result {
     echo "exe_zip_result"
     source=$1
+    current_dir=`pwd`
     file=`basename $source`
     sed_source_underscore=${file//\//_}
-    zip -r ../$sed_source_underscore.zip ../$sed_source_underscore
+    cd ..
+    zip -r $sed_source_underscore.zip $sed_source_underscore
+    cd $current_dir
 }
 
 . config.conf
