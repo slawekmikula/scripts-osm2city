@@ -1,0 +1,1 @@
+/mnt/media/loty/flightgear/osm2city/development/osmosis/script/pgsnapshot_schema_0.6_bbox.sql
