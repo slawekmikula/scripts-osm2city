@@ -4,6 +4,7 @@ directory structure
 * read the documentation for osm2city on: http://osm2city.readthedocs.io
 * directory structure should be the same as in this documentation in: http://osm2city.readthedocs.io/en/latest/preparation.html#creating-a-directory-structure
 * additionaly in development directory you should download and extract osmosis (lastest stable)
+* remeber to have terragear data on your disk for selected area ! Downloat it here: http://www.flightgear.org/download/scenery/
 * I prefer to create python virtualenv specifically for this task and this should be in the same directory
 * my directory structure looks like:
 
@@ -54,7 +55,7 @@ run data
 Prepare and configure application scripts:
 
 * Edit config.conf and provide paths to data/flightgear directories or binaries
-* Edit sources.conf file. In origin it lists paths from geofabrik URL for Poland area
+* Edit sources.conf file. In origin it lists paths from geofabrik URL for Poland area. REMEBER last line must be empty !
 * In order to find proper entry go to geofabrik data e.g. http://download.geofabrik.de/europe/poland/dolnoslaskie.html
 * Search for OSM XML file to download e.g. http://download.geofabrik.de/europe/poland/dolnoslaskie-latest.osm.bz2
 * Enter in sources.conf only europe/poland-dolnoslaskie in single line
