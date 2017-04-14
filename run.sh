@@ -103,6 +103,11 @@ function exe_batch {
     export PYTHONPATH
     export FG_ROOT
 
+    # add ' before WEST when WEST is negative (by paju1986)
+    if (( $(echo "$WEST < 0" |bc -l) )); then
+        WEST="'$WEST"
+    fi
+
     cd $source
     $PYTHON_BIN $OSMCITY_DIR/batch_processing/build_tiles_db.py -f $file.ini -l DEBUG -p 3 -b ${WEST}_${SOUTH}_${EAST}_${NORTH}
     cd $current_dir
