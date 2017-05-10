@@ -28,17 +28,17 @@ I prefer to create separate library location for python 3.5. To do this, perform
 * ./bin/pip install numpy
 * ./bin/pip install matplotlib
 * ./bin/pip install networkx
-* ./bin/pip install pil
+* ./bin/pip install pillow
 * ./bin/pip install scipy
 * ./bin/pip install lapack
 * ./bin/pip install blas
 * ./bin/pip install shapely
 * ./bin/pip install psycopg2
 * ./bin/pip install imaging
-* ./bin/pip install pil
-* ./bin/pip install scipy
-* ./bin/pip install pillow
-* ./bin/pip install psycopg2
+
+or with one liner
+
+* ./bin/pip install numpy matplotlib networkx pillow scipy lapack blas shapely psycopg2 imaging
 
 After this You have complete library strucuture in separate environment.
 
