@@ -37,6 +37,21 @@ function find_coordinates {
     EAST=`head -n 5 $source/$file$SOURCE_POSTFIX_RAW | grep bounds | gawk 'match($0, /.*<bounds minlat="(.*)" minlon="(.*)" maxlat="(.*)" maxlon="(.*)"\/>.*/, a) {print a[4]}'`
 }
 
+# set coordinates from COORDINATES
+function set_coordinates {
+    echo "set_coordinates"
+
+    # 20.0_50.0_20.25_50.125
+    IFS='_' read -r -a coords <<< "$1"
+    WEST=${coords[0]}
+    SOUTH=${coords[1]}
+    EAST=${coords[2]}
+    NORTH=${coords[3]}
+    
+    echo "Set: NORTH: $NORTH EAST: $EAST SOUTH: $SOUTH WEST: $WEST"
+}
+
+
 # copy ini file from template
 function copy_ini {
     echo "copy_ini"
@@ -50,7 +65,7 @@ function modify_ini {
 
     source=$1
     file=`basename $source`
-    sed_source_underscore=${file//\//_}
+    sed_source_underscore=${source//\//\\/}
     scenery_path_escape=${SCENERY_PATH//\//\\/}
     output_path_escape=${OUTPUTH_PATH//\//\\/}
     osmcity_datadir_escape=${OSMCITY_DATADIR//\//\\/}
@@ -103,13 +118,14 @@ function exe_batch {
     export PYTHONPATH
     export FG_ROOT
 
-    # add ' before WEST when WEST is negative (by paju1986)
+    # add * before WEST when WEST is negative (by paju1986, vanosten)
     if (( $(echo "$WEST < 0" |bc -l) )); then
-        WEST="'$WEST"
+        WEST="*$WEST"
     fi
 
     cd $source
-    $PYTHON_BIN $OSMCITY_DIR/batch_processing/build_tiles_db.py -f $file.ini -l DEBUG -p 3 -b ${WEST}_${SOUTH}_${EAST}_${NORTH}
+    echo "--------------------- EXE BATCH -----------------------------------" >> output.log
+    $PYTHON_BIN $OSMCITY_DIR/batch_processing/build_tiles_db.py -f $file.ini -l DEBUG -p 3 -b ${WEST}_${SOUTH}_${EAST}_${NORTH} >> output.log
     cd $current_dir
 }
 
@@ -118,28 +134,68 @@ function exe_zip_result {
     echo "exe_zip_result"
     source=$1
     current_dir=`pwd`
-    file=`basename $source`
-    sed_source_underscore=${file//\//_}
+    sed_source_underscore=${source//\//_}
     cd ..
-    zip -r $sed_source_underscore.zip $sed_source_underscore
+    echo "--------------------- ZIP RESULT -----------------------------------" >> $current_dir/$source/output.log
+    zip -r $sed_source_underscore.zip $source >> $current_dir/$source/output.log
     cd $current_dir
 }
 
 . config.conf
 
-while read p; do
-  if [[ $p != \#* ]]
-  then
-      echo "Executing: $p"
-      create_dir $p
-      download_osmdata $p
-      extract_osmdata $p
-      find_coordinates $p
-      copy_ini $p
-      modify_ini $p
-      exe_truncate_db $p
-      exe_read_db $p
-      exe_batch $p
-      exe_zip_result $p
-  fi
-done <sources.conf
+
+if [ $# -eq 1 ]; 
+then
+    if [[ "$1" = "reprocess" ]];
+    then
+        previous=""
+        while read line; do
+          if [[ $line != \#* ]]
+          then
+              echo "Reprocessing: $line"
+              IFS=', ' read -r -a array <<< "$line"
+              p="${array[0]}"
+              COORDINATES="${array[1]}"
+              echo "Directory: $p"
+              echo "Coordinates: $COORDINATES"
+              
+              echo "--------------------- START PROCESSING -----------------------------------" > $p/output.log
+
+              create_dir $p
+              file=`basename $source`
+              if [ ! -e "$p/$file$SOURCE_POSTFIX_RAW" ] && [[ $previous != $p ]];
+              then                      
+                  download_osmdata $p
+                  extract_osmdata $p
+                  exe_truncate_db $p
+                  exe_read_db $p
+                  previous=$p;
+              fi
+              set_coordinates $COORDINATES
+              copy_ini $p
+              modify_ini $p
+              exe_batch $p
+              exe_zip_result $p
+          fi
+        done <sources_repeat.conf    
+    fi
+else
+    # normal processing
+    while read p; do
+      if [[ $p != \#* ]]
+      then
+          echo "Executing: $p"
+          create_dir $p
+          download_osmdata $p
+          extract_osmdata $p
+          find_coordinates $p
+          copy_ini $p
+          modify_ini $p
+          exe_truncate_db $p
+          exe_read_db $p
+          exe_batch $p
+          exe_zip_result $p
+      fi
+    done <sources.conf
+fi
+
