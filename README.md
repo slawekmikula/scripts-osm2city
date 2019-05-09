@@ -11,6 +11,7 @@ directory structure
 * I prefer to create python virtualenv specifically for this task and this should be in the same directory
 * my directory structure looks like:
 
+```
  osm2city
   - development
    - osm2city (repository https://gitlab.com/fg-radi/osm2city)
@@ -21,6 +22,7 @@ directory structure
    - projects (this repository cloned)
   - flightgear
    - fgfs_terrasync
+ ```
 
 create virtualenv
 -----------------
