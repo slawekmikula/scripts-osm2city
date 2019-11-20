@@ -70,7 +70,9 @@ function modify_ini {
     output_path_escape=${OUTPUTH_PATH//\//\\/}
     osmcity_datadir_escape=${OSMCITY_DATADIR//\//\\/}
     fgelev_path_escape=${FGELEV_PATH//\//\\/}
+    path_to_scenery_opt_escape=${PATH_TO_SCENERY_OPT//\//\\/}
 
+    sed -i "s/{scenery_optional}/${path_to_scenery_opt_escape}/g" $source/`basename $source`.ini
     sed -i "s/{prefix}/${sed_source_underscore}/g" $source/`basename $source`.ini
     sed -i "s/{scenery_path}/${scenery_path_escape}/g" $source/`basename $source`.ini
     sed -i "s/{output_path}/${output_path_escape}/g" $source/`basename $source`.ini
@@ -125,7 +127,7 @@ function exe_batch {
 
     cd $source
     echo "--------------------- EXE BATCH -----------------------------------" >> output.log
-    $PYTHON_BIN $OSMCITY_DIR/batch_processing/build_tiles_db.py -f $file.ini -l DEBUG -p 3 -b ${WEST}_${SOUTH}_${EAST}_${NORTH} >> output.log
+    $PYTHON_BIN $OSMCITY_DIR/build_tiles.py -f $file.ini -l DEBUG -p 3 -b ${WEST}_${SOUTH}_${EAST}_${NORTH} >> output.log
     cd $current_dir
 }
 
@@ -141,8 +143,8 @@ function exe_zip_result {
     cd $current_dir
 }
 
+. custom.conf
 . config.conf
-
 
 if [ $# -eq 1 ]; 
 then
@@ -198,4 +200,3 @@ else
       fi
     done <sources.conf
 fi
-

@@ -24,6 +24,11 @@ directory structure
    - fgfs_terrasync
  ```
 
+custom.conf
+-----------
+
+In root directory there is custom.conf.example file. Copy it to file custom.conf and make changes to paths for FlighGear data, binaries and other locations (e.g. scenery paths)
+
 create virtualenv
 -----------------
 I prefer to create separate library location for python 3.5. To do this, perform these steps:

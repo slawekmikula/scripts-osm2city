@@ -1,0 +1,8 @@
+# user custom paths
+SCENERIES_PATH=/opt/flightgear/sceneries
+OSM2CITY_PATH=/opt/flightgear/osm2city
+FLIGHTGEAR_PATH=/opt/flightgear/bin
+FGDATA_PATH=/opt/flightgear/fgdata/
+PATH_TO_SCENERY_OPT="[ '/opt/flightgear/sceneries/custom-scenery-polish/Scenery', '/opt/flightgear/sceneries/EPKP-fg-CustomScenery/Scenery' ]"
+
+#-------------------------------------------------------------------------------

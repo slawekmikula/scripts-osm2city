@@ -21,20 +21,19 @@ directory structure
 
 create virtualenv
 -----------------
-I prefer to create separate library location for python 3.5. To do this, perform these steps:
+I prefer to create separate library location for python 3.6. To do this, perform these steps:
 
-* virtualenv --python=python3.5 virtualenv
+* virtualenv --python=python3.6 virtualenv
 * cd virtualenv
 * ./bin/pip install numpy
 * ./bin/pip install matplotlib
 * ./bin/pip install networkx
 * ./bin/pip install pillow
 * ./bin/pip install scipy
-* ./bin/pip install lapack
-* ./bin/pip install blas
 * ./bin/pip install shapely
 * ./bin/pip install psycopg2
-* ./bin/pip install imaging
+* ./bin/pip install psycopg2-binary
+* ./bin/pip install descartes
 
 or with one liner
 
