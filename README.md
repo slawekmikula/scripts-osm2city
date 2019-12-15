@@ -45,6 +45,8 @@ I prefer to create separate library location for python 3.5. To do this, perform
 * ./bin/pip install shapely
 * ./bin/pip install psycopg2
 * ./bin/pip install imaging
+* ./bin/pip install requests
+* ./bin/pip install pyproj
 
 or with one liner
 
