@@ -4,10 +4,11 @@ Scripts for osm2city parsing and generation
 directory structure
 -------------------
 
-* read the documentation for osm2city on: http://osm2city.readthedocs.io
+* read the documentation for osm2city on: http://osm2city.readthedocs.io. Especially look for pre-requisites at https://osm2city.readthedocs.io/en/latest/installation.html#pre-requisites for current needed libraries
+* if anything in doubt search/read above documentaion. It is always up-to-date.
 * directory structure should be the same as in this documentation in: http://osm2city.readthedocs.io/en/latest/preparation.html#creating-a-directory-structure
 * additionaly in development directory you should download and extract osmosis (lastest stable)
-* remeber to have terragear data on your disk for selected area ! Downloat it here: http://www.flightgear.org/download/scenery/
+* remeber to have terragear data on your disk for selected area ! Download it here: http://www.flightgear.org/download/scenery/
 * I prefer to create python virtualenv specifically for this task and this should be in the same directory
 * my directory structure looks like:
 
@@ -33,27 +34,25 @@ create virtualenv
 -----------------
 I prefer to create separate library location for python 3.5. To do this, perform these steps:
 
-* virtualenv --python=python3.5 virtualenv
+* virtualenv --python=python3 virtualenv
 * cd virtualenv
 * ./bin/pip install numpy
 * ./bin/pip install matplotlib
 * ./bin/pip install networkx
 * ./bin/pip install pillow
 * ./bin/pip install scipy
-* ./bin/pip install lapack
-* ./bin/pip install blas
 * ./bin/pip install shapely
-* ./bin/pip install psycopg2
-* ./bin/pip install imaging
+* ./bin/pip install psycopg2-binary
 * ./bin/pip install requests
-* ./bin/pip install pyproj
+* ./bin/pip install descartes
+* ./bin/pip install -Iv pyproj==2.4
 
-or with one liner
+or with one-liner:
 
-* ./bin/pip install numpy matplotlib networkx pillow scipy lapack blas shapely psycopg2 imaging
+* ./bin/pip install numpy matplotlib networkx pillow scipy shapely psycopg2-binary requests descartes
+* ./bin/pip install -Iv pyproj==2.4
 
 After this You have complete library strucuture in separate environment.
-
 
 create databases
 ----------------
